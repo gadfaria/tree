@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import "./App.css";
+import config from "../config.json";
 
 function App() {
   useLayoutEffect(() => {
@@ -128,7 +129,7 @@ function App() {
     await growAnimate();
     await flowerAnimate();
     await moveAnimate();
-
+    textAnimate();
     await jumpAnimate();
 
     async function seedAnimate() {
@@ -197,17 +198,42 @@ function App() {
       }
     }
 
-    async function textAnimate() {}
+    async function textAnimate() {
+      const code = document.getElementById("code") as HTMLDivElement;
+
+      code.style.display = "block";
+      const clockBox = document.getElementById("clock-box") as HTMLDivElement;
+      clockBox.style.display = "block";
+
+      const together = new Date(config.date);
+
+      while (true) {
+        timeElapse(new Date(together));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+    }
   }
 
   return (
     <div id="main">
       <div id="wrap">
         <div id="text">
-          <div id="code"></div>
+          <div id="code">
+            {config.lines
+              .map((item) => {
+                return `<span class="say">${item}</span><br>
+      <span class="say"> </span><br>`;
+              })
+              .reduce((a, b) => {
+                return a + b;
+              })}
+          </div>
         </div>
         <div id="clock-box">
-          <span id="clock-box-inside-text"> </span>
+          <span id="clock-box-inside-text">
+            {config.names[0]} <span className="STYLE1"> & </span>
+            {config.names[1]}
+          </span>
           <div id="clock"></div>
         </div>
         <canvas id="canvas" width="1100" height="680"></canvas>
@@ -217,6 +243,37 @@ function App() {
 }
 
 export default App;
+
+function timeElapse(date: Date) {
+  let seconds = (+new Date() - date.getTime()) / 1000;
+  let days = Math.floor(seconds / (3600 * 24));
+  seconds = seconds % (3600 * 24);
+  let hours = Math.floor(seconds / 3600);
+  if (hours < 10) {
+    hours = 0 + hours;
+  }
+  seconds = seconds % 3600;
+  let minutes = Math.floor(seconds / 60);
+  if (minutes < 10) {
+    minutes = 0 + minutes;
+  }
+  seconds = Math.floor(seconds % 60);
+
+  let result =
+    '<span class="digit">' +
+    days +
+    '</span> dias <span class="digit">' +
+    hours +
+    '</span> horas <span class="digit">' +
+    minutes +
+    '</span> minutos <span class="digit">' +
+    seconds +
+    "</span> segundos";
+
+  // $("#clock").html(result);
+  const clock = document.getElementById("clock") as HTMLDivElement;
+  clock.innerHTML = result;
+}
 
 function random(min: number, max: number) {
   return min + Math.floor(Math.random() * (max - min + 1));
