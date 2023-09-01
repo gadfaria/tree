@@ -31,20 +31,34 @@ a {
   transition: all 1s ease-in-out;
 }
 #text {
-  width: 400px;
-  height: 425px;
-  left: 60px;
+  width: fit-content;
   top: 80px;
   position: absolute;
 }
+
+#loveyou {
+  margin-top: 20px;
+  font-size: 30px;
+}
+
 #code {
   display: none;
   font-size: 16px;
 }
 
+#roots {
+  position: absolute;
+  left: 10px;
+  top: 590px;
+  display: none;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+  font-size: 20px;
+}
+
 #clock {
   position: absolute;
-  left: 60px;
+  left: 10px;
   top: 620px;
   display: none;
   opacity: 0;
@@ -70,7 +84,11 @@ a {
 }
 .say {
   margin-left: 5px;
+  font-family: "Rubik", sans-serif;
+  font-style: italic;
+  font-size: 16px;
 }
+
 .space {
   margin-right: 150px;
 }

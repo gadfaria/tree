@@ -1,8 +1,9 @@
 import { useLayoutEffect } from "react";
-import config from "../config.json";
 import "./App.css";
 
 function App() {
+  const audio = new Audio("src/assets/music.mp3");
+
   useLayoutEffect(() => {
     draw();
   }, []);
@@ -102,8 +103,8 @@ function App() {
       const x = e.pageX - offset.left;
       const y = e.pageY - offset.top;
 
-      console.log(seed?.hover(x, y));
       if (seed?.hover(x, y)) {
+        audio.play();
         hold = 0;
         canvas.removeEventListener("click", handleCanvasClick);
         canvas.removeEventListener("mousemove", handleMouseMove);
@@ -199,46 +200,112 @@ function App() {
     }
 
     async function textAnimate() {
-      const code = document.getElementById("code") as HTMLDivElement;
-      code.style.display = "block";
-
-      const clock = document.getElementById("clock") as HTMLDivElement;
-      clock.style.display = "block";
-
       const names = document.getElementById("names") as HTMLSpanElement;
       names.style.display = "block";
-
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      clock.style.opacity = "1";
       names.style.opacity = "1";
 
-      const together = new Date(config.date);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const code = document.getElementById("code") as HTMLDivElement;
+      code.style.display = "block";
+      typewriter();
+
+      const together = new Date("2019-06-06T00:00:00");
 
       while (true) {
         timeElapse(new Date(together));
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
+
+    function typewriter() {
+      const code = document.getElementById("code") as HTMLDivElement;
+      const codeHTML = code.innerHTML;
+      let i = 0;
+      code.innerHTML = "";
+      const timer = setInterval(() => {
+        let current = codeHTML[i];
+        if (current === "<") {
+          i = codeHTML.indexOf(">", i) + 1;
+        } else {
+          i++;
+        }
+
+        if (i < codeHTML.length) {
+          code.innerHTML = codeHTML.substring(0, i) + (i & 1 ? "_" : "");
+        } else {
+          code.innerHTML = codeHTML.substring(0, i);
+          showClock();
+          clearInterval(timer);
+        }
+      }, 75);
+    }
+
+    async function showClock() {
+      const roots = document.getElementById("roots") as HTMLDivElement;
+      roots.style.display = "block";
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      roots.style.opacity = "1";
+
+      const clock = document.getElementById("clock") as HTMLDivElement;
+      clock.style.display = "block";
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      clock.style.opacity = "1";
+    }
   }
 
   return (
     <div id="main">
-      <span id="names">
-        {config.names[0]} & {config.names[1]}
-      </span>
+      <span id="names">Gabriel & Larissa</span>
       <div id="wrap">
         <div id="text">
           <div id="code">
-            {config.lines
-              .map((item) => {
-                return `<span class="say">${item}</span><br>
-      <span class="say"> </span><br>`;
-              })
-              .reduce((a, b) => {
-                return a + b;
-              })}
+            <span className="say">
+              Assim como as folhas dançam ao sabor do vento,
+            </span>
+            <br />
+            <span className="say">
+              meu coração dança ao ritmo do amor que sinto por você.
+            </span>
+            <br />
+            <br />
+            <span className="say">
+              Cada folha que cai é como um pensamento que voa em direção a você,
+            </span>
+            <br />
+            <span className="say">
+              carregando os sentimentos mais profundos que habitam em mim.
+            </span>
+            <br />
+            <br />
+            <span className="say">
+              Assim como as árvores dependem das folhas para florescer,
+            </span>
+            <br />
+            <span className="say">
+              eu dependo do seu amor para encontrar minha plenitude.
+            </span>
+            <br />
+            <br />
+            <span className="say">Que nossa história cresça e floresça,</span>
+            <br />
+            <span className="say">
+              assim como as árvores que se renovam a cada estação,
+            </span>
+            <br />
+            <span className="say">e que nosso amor seja tão eterno</span>
+            <br />
+            <span className="say">
+              quanto as raízes que sustentam essas folhas.
+            </span>
+            <br />
+            <br />
+            <span className="say">Te amo!</span>
           </div>
         </div>
+        <div id="roots">Estamos criando nossas raízes há:</div>
         <div id="clock"></div>
         <canvas id="canvas" width="1100" height="680"></canvas>
       </div>
