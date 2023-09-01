@@ -1,6 +1,6 @@
-import { useLayoutEffect, useState } from "react";
-import "./App.css";
+import { useLayoutEffect } from "react";
 import config from "../config.json";
+import "./App.css";
 
 function App() {
   useLayoutEffect(() => {
@@ -200,10 +200,17 @@ function App() {
 
     async function textAnimate() {
       const code = document.getElementById("code") as HTMLDivElement;
-
       code.style.display = "block";
-      const clockBox = document.getElementById("clock-box") as HTMLDivElement;
-      clockBox.style.display = "block";
+
+      const clock = document.getElementById("clock") as HTMLDivElement;
+      clock.style.display = "block";
+
+      const names = document.getElementById("names") as HTMLSpanElement;
+      names.style.display = "block";
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      clock.style.opacity = "1";
+      names.style.opacity = "1";
 
       const together = new Date(config.date);
 
@@ -216,6 +223,9 @@ function App() {
 
   return (
     <div id="main">
+      <span id="names">
+        {config.names[0]} & {config.names[1]}
+      </span>
       <div id="wrap">
         <div id="text">
           <div id="code">
@@ -229,13 +239,7 @@ function App() {
               })}
           </div>
         </div>
-        <div id="clock-box">
-          <span id="clock-box-inside-text">
-            {config.names[0]} <span className="STYLE1"> & </span>
-            {config.names[1]}
-          </span>
-          <div id="clock"></div>
-        </div>
+        <div id="clock"></div>
         <canvas id="canvas" width="1100" height="680"></canvas>
       </div>
     </div>

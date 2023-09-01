@@ -21,6 +21,15 @@ a {
   height: 680px;
   margin-top: 10px;
 }
+#names {
+  font-family: "Tangerine", serif;
+  font-size: 48px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
 #text {
   width: 400px;
   height: 425px;
@@ -32,22 +41,18 @@ a {
   display: none;
   font-size: 16px;
 }
-#clock-box {
+
+#clock {
   position: absolute;
   left: 60px;
-  top: 550px;
-  font-size: 28px;
+  top: 620px;
   display: none;
-}
-#clock-box a {
-  font-size: 28px;
-  text-decoration: none;
-}
-#clock {
-  margin-left: 48px;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+  font-size: 24px;
 }
 #clock .digit {
-  font-size: 64px;
+  font-size: 32px;
 }
 #canvas {
   margin: 0 auto;
