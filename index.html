@@ -1,21 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/love.svg" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Tangerine"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap"
-      rel="stylesheet"
-    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Love Tree</title>
+    <link rel="icon" type="image/svg+xml" href="assets/love.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,600&family=Great+Vibes&family=Inter:wght@400;600&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <main class="page">
+      <div id="stage-wrap" class="stage-wrap">
+        <div id="stage" class="stage">
+          <canvas id="background" width="1100" height="680"></canvas>
+          <canvas id="canvas" width="1100" height="680" tabindex="0" aria-label="Coração: pressione Enter para começar"></canvas>
+
+          <section id="story" class="story">
+            <h1 id="names" class="names fade">Gabriel &amp; Larissa</h1>
+
+            <div id="poem" class="poem fade">
+              <p>
+                <span class="line">Assim como as folhas dançam ao sabor do vento,</span>
+                <span class="line">meu coração dança ao ritmo do amor que sinto por você.</span>
+              </p>
+              <p>
+                <span class="line">Cada folha que cai é como um pensamento que voa em direção a você,</span>
+                <span class="line">carregando os sentimentos mais profundos que habitam em mim.</span>
+              </p>
+              <p>
+                <span class="line">Assim como as árvores dependem das folhas para florescer,</span>
+                <span class="line">eu dependo do seu amor para encontrar minha plenitude.</span>
+              </p>
+              <p>
+                <span class="line">Que nossa história cresça e floresça,</span>
+                <span class="line">assim como as árvores que se renovam a cada estação,</span>
+                <span class="line">e que nosso amor seja tão eterno</span>
+                <span class="line">quanto as raízes que sustentam essas folhas.</span>
+              </p>
+              <p class="signature"><span class="line">Te amo!</span></p>
+            </div>
+
+            <div class="together">
+              <p id="roots" class="roots fade">Estamos criando nossas raízes há</p>
+              <div id="clock" class="clock fade" aria-live="off">
+                <div class="unit"><span class="num" data-unit="years">0</span><span class="label">anos</span></div>
+                <div class="unit"><span class="num" data-unit="days">0</span><span class="label">dias</span></div>
+                <div class="unit"><span class="num" data-unit="hours">00</span><span class="label">horas</span></div>
+                <div class="unit"><span class="num" data-unit="minutes">00</span><span class="label">minutos</span></div>
+                <div class="unit"><span class="num" data-unit="seconds">00</span><span class="label">segundos</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <button id="sound" class="sound" type="button" aria-label="Pausar música" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9v6h4l5 4V5L8 9H4z" />
+        <path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" />
+        <path class="mute" d="M16 9l6 6M22 9l-6 6" />
+      </svg>
+    </button>
+
+    <audio id="music" src="assets/music.mp3" preload="auto" loop></audio>
+
+    <script src="js/tree.js" defer></script>
+    <script src="js/main.js" defer></script>
   </body>
 </html>

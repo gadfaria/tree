@@ -1,0 +1,304 @@
+:root {
+  --bg: #fbf6ef;
+  --ink: #3b2b27;
+  --muted: #8c736d;
+  --accent: #c93a5a;
+  --card: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(201, 58, 90, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(1100px 600px at 90% -10%, #fde1e4 0%, transparent 60%),
+    radial-gradient(900px 520px at -10% 110%, #fbe8d8 0%, transparent 60%),
+    var(--bg);
+  color: var(--ink);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  padding: 24px 16px 56px;
+}
+
+/* Center the scene vertically on wide screens */
+body:not(.is-narrow) .page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+/* Stage: fixed 1100x680 scene, scaled by JS to fit the viewport */
+.stage-wrap {
+  margin: 0 auto;
+}
+
+.stage {
+  position: relative;
+  width: 1100px;
+  height: 680px;
+  transform-origin: top left;
+}
+
+.stage canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1100px;
+  height: 680px;
+}
+
+.stage canvas:focus-visible {
+  outline: 2px dashed var(--card-border);
+  outline-offset: -8px;
+  border-radius: 16px;
+}
+
+.story {
+  position: absolute;
+  top: 12px;
+  bottom: 8px;
+  left: 24px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.names {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.poem {
+  margin-top: 10px;
+  font-size: 18.5px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.poem p {
+  margin: 0 0 12px;
+}
+
+.line {
+  display: block;
+  min-height: 1.4em;
+}
+
+.poem .signature {
+  margin-top: 4px;
+  font-family: "Great Vibes", cursive;
+  font-style: normal;
+  font-size: 36px;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.caret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: blink 0.9s steps(1) infinite;
+}
+
+.together {
+  margin-top: auto;
+}
+
+.roots {
+  margin: 0 0 10px;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.clock {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  max-width: 470px;
+}
+
+.unit {
+  padding: 10px 6px 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(120, 60, 50, 0.08);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+.num {
+  display: block;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.label {
+  display: block;
+  margin-top: 2px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Reveal transitions */
+.fade {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.fade.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Floating music toggle */
+.sound {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--card-border);
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(120, 60, 50, 0.12);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.sound[hidden] {
+  display: none;
+}
+
+.sound:hover {
+  transform: scale(1.06);
+}
+
+.sound svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sound svg path:first-child {
+  fill: var(--accent);
+}
+
+.sound .mute,
+.sound.is-muted .wave {
+  display: none;
+}
+
+.sound.is-muted .mute {
+  display: inline;
+}
+
+/* Narrow screens: tree on top, story centered below */
+body.is-narrow .page {
+  padding: 16px 16px 104px;
+}
+
+body.is-narrow .line {
+  text-wrap: balance;
+}
+
+body.is-narrow .stage {
+  overflow: hidden;
+}
+
+body.is-narrow .story {
+  position: static;
+  width: auto;
+  max-width: 440px;
+  margin: 8px auto 0;
+  text-align: center;
+  pointer-events: auto;
+}
+
+body.is-narrow .names {
+  font-size: clamp(44px, 13vw, 56px);
+}
+
+body.is-narrow .poem {
+  margin-top: 14px;
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+body.is-narrow .poem p {
+  margin-bottom: 18px;
+}
+
+body.is-narrow .poem .signature {
+  font-size: 40px;
+}
+
+body.is-narrow .together {
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--card-border);
+}
+
+body.is-narrow .clock {
+  gap: 6px;
+  margin: 0 auto;
+}
+
+body.is-narrow .unit {
+  padding: 10px 2px 8px;
+  border-radius: 14px;
+}
+
+body.is-narrow .num {
+  font-size: clamp(18px, 5.6vw, 24px);
+}
+
+body.is-narrow .label {
+  font-size: clamp(8.5px, 2.5vw, 10px);
+  letter-spacing: 0.02em;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
